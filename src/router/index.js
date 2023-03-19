@@ -1,20 +1,51 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
+  { path: '/', redirect: '/Admin'},
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/Admin',
+    name: 'Admin',
+    component: () => import ( /* webpackChunkName: "AdminView" */  '@/modules/Admin/layouts/AdminLayout.vue'),
+    children: [
+      {
+        path: 'nueva-orden',
+        name: 'crear-cuenta',
+        component: () => import ( /* webpackChunkName: "CrearOrden" */ '@/modules/Admin/views/CreateOrder.vue' ),
+        children: [
+          { path: 'wings',
+            name: 'wings',
+            component: () => import( '@/modules/Admin/views/Categories/WingsOptions.vue') 
+          },
+          { path: 'burguers',
+            name: 'burguers',
+            component: () => import( '@/modules/Admin/views/Categories/BurguerOptions.vue') 
+          },
+          { path: 'hot-dogs',
+            name: 'hot-dogs',
+            component: () => import( '@/modules/Admin/views/Categories/HotDogsOptions.vue') 
+          },
+          { path: 'desserts',
+            name: 'desserts',
+            component: () => import( '@/modules/Admin/views/Categories/DessertOptions.vue') 
+          },
+          { path: 'drinks',
+            name: 'drinks',
+            component: () => import( '@/modules/Admin/views/Categories/DrinksOptions.vue') 
+          },
+        ]
+      },
+      {
+        path: 'ordenes-actuales',
+        name: 'cuenta-abierta',
+        component: () => import ( /* webpackChunName*: "OrdenesActuales" */ '@/modules/Admin/views/ActualsOrders.vue')
+      },
+      {
+        path: 'ordenes-cerradas',
+        name: 'cuentas-cerradas',
+        component: () => import ( /** webpackChunkName: "OrdenesCerradas" */ '@/modules/Admin/views/ClosedOrders.vue')
+      }
+    ]
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
 ]
 
 const router = createRouter({

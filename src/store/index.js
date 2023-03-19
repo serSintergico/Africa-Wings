@@ -1,14 +1,8 @@
-import { createStore } from 'vuex'
-
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+import { createStore } from "vuex"
+import admin from '@/modules/Admin/store'
+const store = createStore({
   modules: {
+    admin
   }
 })
+export default store
